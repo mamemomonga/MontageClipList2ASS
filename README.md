@@ -18,6 +18,17 @@
 
     $ ./montage_cliplist2ass -f example/ClipList.xml -t example/ass.tpl -o output.ass
 
+## バイナリ
+
+[releases](https://github.com/mamemomonga/MontageClipList2ASS/releases/)
+
+* montage_cliplist2ass-darwin-arm64 macOS Apple Silicon
+* montage_cliplist2ass-darwin-amd64 macOS Intel
+* montage_cliplist2ass-linux-amd64 Linux x86_64
+* montage_cliplist2ass-linux-arm Linux ARMv7
+* montage_cliplist2ass-linux-arm64 Linux ARMv8
+* montage_cliplist2ass-windows-amd64.exe Windows x86_64
+
 ## ビルド
 
 ビルド
