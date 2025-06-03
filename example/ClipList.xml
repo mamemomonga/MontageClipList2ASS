@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ClipList>
+	<Clip>
+		<Name>Whispering Rain</Name>
+		<File>./audio/Whispering Rain.wav</File>
+		<Track>トラック 1</Track>
+		<StartInMontage>0 s</StartInMontage>
+		<StarInSource>0 s</StarInSource>
+		<Length>2 mn 14 s 880 ms</Length>
+		<FadeInLength>0 s</FadeInLength>
+		<FadeOutLength>1 s 94 ms</FadeOutLength>
+		<PreGain>0 dB</PreGain>
+		<PostGain>0 dB</PostGain>
+		<Comment></Comment>
+	</Clip>
+	<Clip>
+		<Name>真夜中のネオン</Name>
+		<File>./audio/真夜中のネオン.wav</File>
+		<Track>トラック 2</Track>
+		<StartInMontage>2 mn 13 s 639 ms</StartInMontage>
+		<StarInSource>0 s</StarInSource>
+		<Length>2 mn 8 s 881 ms</Length>
+		<FadeInLength>0 s</FadeInLength>
+		<FadeOutLength>333 ms</FadeOutLength>
+		<PreGain>0 dB</PreGain>
+		<PostGain>0 dB</PostGain>
+		<Comment></Comment>
+	</Clip>
+	<Clip>
+		<Name>Lost in Tokyo</Name>
+		<File>./audio/Lost in Tokyo.wav</File>
+		<Track>トラック 1</Track>
+		<StartInMontage>4 mn 22 s 3 ms</StartInMontage>
+		<StarInSource>0 s</StarInSource>
+		<Length>3 mn 4 s 83 ms</Length>
+		<FadeInLength>311 ms</FadeInLength>
+		<FadeOutLength>1 s 762 ms</FadeOutLength>
+		<PreGain>0 dB</PreGain>
+		<PostGain>0 dB</PostGain>
+		<Comment></Comment>
+	</Clip>
+	<Clip>
+		<Name>星屑のメモリー</Name>
+		<File>./audio/星屑のメモリー</File>
+		<Track>トラック 2</Track>
+		<StartInMontage>7 mn 25 s 318 ms</StartInMontage>
+		<StarInSource>0 s</StarInSource>
+		<Length>2 mn 59 s 640 ms</Length>
+		<FadeInLength>0 s</FadeInLength>
+		<FadeOutLength>1 s 709 ms</FadeOutLength>
+		<PreGain>0 dB</PreGain>
+		<PostGain>0 dB</PostGain>
+		<Comment></Comment>
+	</Clip>
+</ClipList>
