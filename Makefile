@@ -74,6 +74,7 @@ rmi:
 # マルチアーキテクチャ
 # 対応リスト https://golang.org/doc/install/source#environment
 multiarch:
+	GOOS=darwin  GOARCH=arm64 $(MAKE) multiarch-build
 	GOOS=darwin  GOARCH=amd64 $(MAKE) multiarch-build
 	GOOS=windows GOARCH=amd64 $(MAKE) multiarch-build
 	GOOS=linux   GOARCH=amd64 $(MAKE) multiarch-build
