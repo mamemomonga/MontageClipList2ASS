@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/mamemomonga/MontageClipList2ASS/src/config"
 	"github.com/mamemomonga/MontageClipList2ASS/src/montage"
 )
 
@@ -16,8 +17,8 @@ var (
 
 func main() {
 	verString := fmt.Sprintf("%s-%s", version, revision)
+	configPath := flag.String("c", "config.yaml", "Configファイルのパス")
 	xmlPath := flag.String("f", "", "XMLファイルのパス")
-	tplPath := flag.String("t", "ass.tpl", "ASSテンプレートファイル")
 	outPath := flag.String("o", "output.ass", "出力ファイル名")
 	showVersion := flag.Bool("v", false, "バージョン表示")
 	flag.Parse()
@@ -26,16 +27,18 @@ func main() {
 		fmt.Printf("montage_cliplist2ass version %s\n", verString)
 		os.Exit(0)
 	}
-	mcl := montage.NewMontageClipList()
-	if err := mcl.LoadFile(xmlPath); err != nil {
+
+	cfg := config.NewConfig()
+	cfg.Load(configPath)
+
+	mcl := montage.NewMontageClipList(cfg)
+
+	if err := mcl.Load(xmlPath); err != nil {
 		log.Fatal(fmt.Errorf("XMLエラー: %w", err))
 	}
 
-	mcl.Convert()
-	if err := mcl.Template(tplPath, outPath); err != nil {
-		log.Fatal(err)
+	if err := mcl.WriteAssFile(outPath); err != nil {
+		log.Fatal(fmt.Errorf("ASSファイル: %w", err))
 	}
-
-	// spew.Dump(mcl.Clips)
 
 }

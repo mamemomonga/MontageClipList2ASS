@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -58,10 +57,4 @@ func formatDurationToASS(d time.Duration) string {
 	s := int(d.Seconds()) % 60
 	cs := (d.Milliseconds() % 1000) / 10 // centiseconds
 	return fmt.Sprintf("%d:%02d:%02d.%02d", h, m, s, cs)
-}
-
-func cleanName(raw string) string {
-	re := regexp.MustCompile(`^\d+\.\s*`)
-	cleaned := re.ReplaceAllString(raw, "")
-	return strings.TrimSpace(cleaned)
 }

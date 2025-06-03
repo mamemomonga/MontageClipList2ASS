@@ -2,49 +2,97 @@ package montage
 
 import (
 	"fmt"
-	"html/template"
 	"os"
+	"strings"
 	"time"
 )
 
-func (t *MontageClipList) Convert() {
-	var lines []ASSLine
-	for _, c := range t.Clips {
-		startDur := parseTimeToDuration(c.StartInMontage)
-		// 表示時間はそのクリップが終わる3秒前まで
-		endDur := startDur + parseTimeToDuration(c.Length) - time.Second*3
-		lines = append(lines, ASSLine{
-			Name:  cleanName(c.Name),
-			Start: formatDurationToASS(startDur),
-			End:   formatDurationToASS(endDur),
-		})
-	}
-	t.assdata = lines
-}
+func (t *MontageClipList) WriteAssFile(fn *string) error {
+	b := `[Script Info]
+Title: MontageClipList2ASS
+ScriptType: v4.00+
 
-func (t *MontageClipList) Template(tplPath *string, outPath *string) error {
+` + t.style() + `
 
-	// テンプレート読み込み
-	tplText, err := os.ReadFile(*tplPath)
-	if err != nil {
-		return fmt.Errorf("テンプレート読み込みエラー: %w", err)
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+`
+	for _, c := range t.filter() {
+		b = b + "Dialogue: 0," + c.Start + "," + c.End + ",Default,,0,0,0,," + c.Name + "\n"
 	}
 
-	tpl, err := template.New("ass").Parse(string(tplText))
-	if err != nil {
-		return fmt.Errorf("テンプレート構文エラー: %w", err)
-	}
-
-	outFile, err := os.Create(*outPath)
+	outFile, err := os.Create(*fn)
 	if err != nil {
 		return fmt.Errorf("出力ファイル作成エラー: %w", err)
 	}
 	defer outFile.Close()
 
-	if err := tpl.Execute(outFile, t.assdata); err != nil {
-		return fmt.Errorf("テンプレート実行エラー: %w", err)
-	}
-
-	fmt.Printf("ASSファイルを出力しました: %s\n", *outPath)
+	outFile.WriteString(b)
+	fmt.Printf("ASSファイルを出力しました: %s\n", *fn)
 	return nil
+}
+
+func (t *MontageClipList) style() string {
+	b := "[V4+ Styles]\n"
+	s := t.cfg.C.Style
+	b = b + "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
+	b = b + fmt.Sprintf("Style: %s,%s,%d,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+		s.Name,
+		s.Fontname,
+		s.Fontsize,
+		s.PrimaryColour,
+		s.SecondaryColour,
+		s.OutlineColour,
+		s.BackColour,
+		s.Bold,
+		s.Italic,
+		s.Underline,
+		s.StrikeOut,
+		s.ScaleX,
+		s.ScaleY,
+		s.Spacing,
+		s.Angle,
+		s.BorderStyle,
+		s.Outline,
+		s.Shadow,
+		s.Alignment,
+		s.MarginL,
+		s.MarginR,
+		s.MarginV,
+		s.Encoding,
+	)
+	return b
+}
+
+func (t *MontageClipList) filter() []ASSLine {
+	var lines []ASSLine
+	for i, c := range t.Clips {
+		startDur := parseTimeToDuration(c.StartInMontage)
+		var endDur time.Duration
+		hideBefore := time.Second * time.Duration(t.cfg.C.HideBefore)
+
+		if i+1 < len(t.Clips) {
+			// 一つ前のクリップが始まる部分
+			nextStart := parseTimeToDuration(t.Clips[i+1].StartInMontage)
+			endDur = nextStart - hideBefore
+			if endDur < startDur {
+				endDur = startDur // 最低限、EndがStartを下回らないように
+			}
+		} else {
+			// 最後のクリップは自分の長さ
+			endDur = startDur + parseTimeToDuration(c.Length) - hideBefore
+		}
+		lines = append(lines, ASSLine{
+			Name:  t.filterName(c.Name),
+			Start: formatDurationToASS(startDur),
+			End:   formatDurationToASS(endDur),
+		})
+	}
+	return lines
+}
+
+func (t *MontageClipList) filterName(in string) string {
+	//	re := regexp.MustCompile(`^\d+\.\s*`)
+	//	cleaned := re.ReplaceAllString(raw, "")
+	return t.cfg.C.Filter.Pre + strings.TrimSpace(in) + t.cfg.C.Filter.Post
 }

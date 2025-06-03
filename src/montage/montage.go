@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func (t *MontageClipList) LoadFile(fn *string) error {
+func (t *MontageClipList) Load(fn *string) error {
 	if *fn == "" {
 		return fmt.Errorf("XMLファイルを -f で指定してください")
 	}

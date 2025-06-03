@@ -1,14 +1,20 @@
 package montage
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+
+	"github.com/mamemomonga/MontageClipList2ASS/src/config"
+)
 
 type MontageClipList struct {
 	Clips   []Clip
+	cfg     *config.Config
 	assdata []ASSLine
 }
 
-func NewMontageClipList() (t *MontageClipList) {
+func NewMontageClipList(cfg *config.Config) (t *MontageClipList) {
 	t = new(MontageClipList)
+	t.cfg = cfg
 	return t
 }
 

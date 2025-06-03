@@ -4,7 +4,7 @@
 
 ## 使い方
 
-    $ ./montage_cliplist2ass -f [XMLファイル] -t [テンプレートファイル] -o [出力ASSファイル]
+    $ ./montage_cliplist2ass -f [XMLファイル] -c [設定ファイル] -o [出力ASSファイル]
     
 ヘルプ
 
@@ -16,7 +16,7 @@
 
 使用例
 
-    $ ./montage_cliplist2ass -f example/ClipList.xml -t example/ass.tpl -o output.ass
+    $ ./montage_cliplist2ass -f example/ClipList.xml -c example/config.yaml -o output.ass
 
 ## バイナリ
 
@@ -43,6 +43,6 @@ Dockerでビルド
 
     $ make docker
 
-即時実行
+即時実行とプレビュー
 
     $ ./run.sh -h

@@ -2,3 +2,5 @@
 /revision
 /vendor
 /*.xml
+/output.*
+/projects
