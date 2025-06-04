@@ -1,30 +1,31 @@
-Style:
-  Name: "Default"
-  Fontname: "Arial"
-  Fontsize: 18
-  PrimaryColour: "&H00FFFFFF" 
-  SecondaryColour: "&H000000FF"
-  OutlineColour: "&H00000000"
-  BackColour: "&H00000000"
-  Bold: 0
-  Italic: 0
-  Underline: 0
-  StrikeOut: 0
-  ScaleX: 100
-  ScaleY: 100
-  Spacing: 0
-  Angle: 0
-  BorderStyle: 1
-  Outline: 5
-  Shadow: 0
-  Alignment: 7
-  MarginL: 20
-  MarginR: 10
-  MarginV: 30
-  Encoding: 1
+ASSFile:
+  Style:
+    Name: "Default"
+    Fontname: "Arial"
+    Fontsize: 18
+    PrimaryColour: "&H00FFFFFF" 
+    SecondaryColour: "&H000000FF"
+    OutlineColour: "&H00000000"
+    BackColour: "&H00000000"
+    Bold: 0
+    Italic: 0
+    Underline: 0
+    StrikeOut: 0
+    ScaleX: 100
+    ScaleY: 100
+    Spacing: 0
+    Angle: 0
+    BorderStyle: 1
+    Outline: 5
+    Shadow: 0
+    Alignment: 7
+    MarginL: 20
+    MarginR: 10
+    MarginV: 30
+    Encoding: 1
 
-Filter:
-  pre: '♬ "'
-  post: '"'
+  Filter:
+    pre: '♬ "'
+    post: '"'
 
-HideBefore: 3
+  HideBefore: 3

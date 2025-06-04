@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 go run ./src/cmd/montage_cliplist2ass $@
 
 if [ -f output.ass ]; then

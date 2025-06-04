@@ -8,10 +8,10 @@ import (
 )
 
 type Config struct {
-	C TConfig
+	ASSFile TASSFile `yaml:"ASSFile"`
 }
 
-type TConfig struct {
+type TASSFile struct {
 	Style      TStyle  `yaml:"Style"`
 	Filter     TFilter `yaml:"Filter"`
 	HideBefore int     `yaml:"HideBefore"`
@@ -59,7 +59,7 @@ func (t *Config) Load(filename *string) error {
 		return fmt.Errorf("Configファイル読み込み失敗 - %w", err)
 	}
 
-	if err := yaml.Unmarshal(data, &t.C); err != nil {
+	if err := yaml.Unmarshal(data, t); err != nil {
 		return fmt.Errorf("Configファイル処理失敗 - %w", err)
 	}
 	return nil

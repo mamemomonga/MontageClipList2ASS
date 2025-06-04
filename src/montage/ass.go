@@ -34,7 +34,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 func (t *MontageClipList) style() string {
 	b := "[V4+ Styles]\n"
-	s := t.cfg.C.Style
+	s := t.cfg.ASSFile.Style
 	b = b + "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
 	b = b + fmt.Sprintf("Style: %s,%s,%d,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
 		s.Name,
@@ -69,7 +69,7 @@ func (t *MontageClipList) filter() []ASSLine {
 	for i, c := range t.Clips {
 		startDur := parseTimeToDuration(c.StartInMontage)
 		var endDur time.Duration
-		hideBefore := time.Second * time.Duration(t.cfg.C.HideBefore)
+		hideBefore := time.Second * time.Duration(t.cfg.ASSFile.HideBefore)
 
 		if i+1 < len(t.Clips) {
 			// 一つ前のクリップが始まる部分
@@ -94,5 +94,5 @@ func (t *MontageClipList) filter() []ASSLine {
 func (t *MontageClipList) filterName(in string) string {
 	//	re := regexp.MustCompile(`^\d+\.\s*`)
 	//	cleaned := re.ReplaceAllString(raw, "")
-	return t.cfg.C.Filter.Pre + strings.TrimSpace(in) + t.cfg.C.Filter.Post
+	return t.cfg.ASSFile.Filter.Pre + strings.TrimSpace(in) + t.cfg.ASSFile.Filter.Post
 }

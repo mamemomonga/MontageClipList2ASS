@@ -7,9 +7,8 @@ import (
 )
 
 type MontageClipList struct {
-	Clips   []Clip
-	cfg     *config.Config
-	assdata []ASSLine
+	Clips []Clip
+	cfg   *config.Config
 }
 
 func NewMontageClipList(cfg *config.Config) (t *MontageClipList) {
