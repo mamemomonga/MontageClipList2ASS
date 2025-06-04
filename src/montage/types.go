@@ -11,12 +11,6 @@ type MontageClipList struct {
 	cfg   *config.Config
 }
 
-func NewMontageClipList(cfg *config.Config) (t *MontageClipList) {
-	t = new(MontageClipList)
-	t.cfg = cfg
-	return t
-}
-
 type ClipList struct {
 	XMLName xml.Name `xml:"ClipList"`
 	Clips   []Clip   `xml:"Clip"`

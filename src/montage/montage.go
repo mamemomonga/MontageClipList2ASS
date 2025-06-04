@@ -4,9 +4,17 @@ import (
 	"encoding/xml"
 	"fmt"
 	"os"
+
+	"github.com/mamemomonga/MontageClipList2ASS/src/config"
 )
 
-func (t *MontageClipList) Load(fn *string) error {
+func NewMontageClipList(cfg *config.Config) (t *MontageClipList) {
+	t = new(MontageClipList)
+	t.cfg = cfg
+	return t
+}
+
+func (t *MontageClipList) MontageXMLLoad(fn *string) error {
 	if *fn == "" {
 		return fmt.Errorf("XMLファイルを -f で指定してください")
 	}

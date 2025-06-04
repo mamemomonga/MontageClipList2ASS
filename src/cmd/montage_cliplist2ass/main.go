@@ -33,11 +33,11 @@ func main() {
 
 	mcl := montage.NewMontageClipList(cfg)
 
-	if err := mcl.Load(xmlPath); err != nil {
+	if err := mcl.MontageXMLLoad(xmlPath); err != nil {
 		log.Fatal(fmt.Errorf("XMLエラー: %w", err))
 	}
 
-	if err := mcl.WriteAssFile(outPath); err != nil {
+	if err := mcl.ASSWriteFile(outPath); err != nil {
 		log.Fatal(fmt.Errorf("ASSファイル: %w", err))
 	}
 

@@ -7,17 +7,17 @@ import (
 	"time"
 )
 
-func (t *MontageClipList) WriteAssFile(fn *string) error {
+func (t *MontageClipList) ASSWriteFile(fn *string) error {
 	b := `[Script Info]
 Title: MontageClipList2ASS
 ScriptType: v4.00+
 
-` + t.style() + `
+` + t.assStyle() + `
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 `
-	for _, c := range t.filter() {
+	for _, c := range t.assFilter() {
 		b = b + "Dialogue: 0," + c.Start + "," + c.End + ",Default,,0,0,0,," + c.Name + "\n"
 	}
 
@@ -32,7 +32,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 	return nil
 }
 
-func (t *MontageClipList) style() string {
+func (t *MontageClipList) assStyle() string {
 	b := "[V4+ Styles]\n"
 	s := t.cfg.ASSFile.Style
 	b = b + "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
@@ -64,7 +64,7 @@ func (t *MontageClipList) style() string {
 	return b
 }
 
-func (t *MontageClipList) filter() []ASSLine {
+func (t *MontageClipList) assFilter() []ASSLine {
 	var lines []ASSLine
 	for i, c := range t.Clips {
 		startDur := parseTimeToDuration(c.StartInMontage)
@@ -83,16 +83,10 @@ func (t *MontageClipList) filter() []ASSLine {
 			endDur = startDur + parseTimeToDuration(c.Length) - hideBefore
 		}
 		lines = append(lines, ASSLine{
-			Name:  t.filterName(c.Name),
+			Name:  t.cfg.ASSFile.Filter.Pre + strings.TrimSpace(c.Name) + t.cfg.ASSFile.Filter.Post,
 			Start: formatDurationToASS(startDur),
 			End:   formatDurationToASS(endDur),
 		})
 	}
 	return lines
-}
-
-func (t *MontageClipList) filterName(in string) string {
-	//	re := regexp.MustCompile(`^\d+\.\s*`)
-	//	cleaned := re.ReplaceAllString(raw, "")
-	return t.cfg.ASSFile.Filter.Pre + strings.TrimSpace(in) + t.cfg.ASSFile.Filter.Post
 }
