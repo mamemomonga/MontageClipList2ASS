@@ -20,6 +20,7 @@ func main() {
 	configPath := flag.String("c", "config.yaml", "Configファイルのパス")
 	xmlPath := flag.String("f", "", "XMLファイルのパス")
 	outPath := flag.String("o", "output.ass", "出力ファイル名")
+	//	idxPath := flag.String("x", "index.txt", "YouTubeインデックスファイル名")
 	showVersion := flag.Bool("v", false, "バージョン表示")
 	flag.Parse()
 

@@ -29,5 +29,10 @@ func (t *MontageClipList) MontageXMLLoad(fn *string) error {
 		return fmt.Errorf("XMLの読み込みに失敗: %w", err)
 	}
 	t.Clips = c.Clips
+
+	if err := t.assFilter(); err != nil {
+		return err
+	}
+
 	return nil
 }

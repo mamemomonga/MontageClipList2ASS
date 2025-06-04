@@ -9,6 +9,14 @@ import (
 type MontageClipList struct {
 	Clips []Clip
 	cfg   *config.Config
+	data  []TData
+}
+
+type TData struct {
+	Caption      string
+	EventStart   string
+	EventEnd     string
+	YouTubeIndex string
 }
 
 type ClipList struct {
@@ -29,10 +37,4 @@ type Clip struct {
 	PreGain        string   `xml:"PreGain"`
 	PostGain       string   `xml:"PostGain"`
 	Comment        string   `xml:"Comment"`
-}
-
-type ASSLine struct {
-	Name  string
-	Start string
-	End   string
 }

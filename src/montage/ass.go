@@ -1,9 +1,11 @@
 package montage
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"strings"
+	"text/template"
 	"time"
 )
 
@@ -17,8 +19,8 @@ ScriptType: v4.00+
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 `
-	for _, c := range t.assFilter() {
-		b = b + "Dialogue: 0," + c.Start + "," + c.End + ",Default,,0,0,0,," + c.Name + "\n"
+	for _, c := range t.data {
+		b = b + "Dialogue: 0," + c.EventStart + "," + c.EventEnd + ",Default,,0,0,0,," + c.Caption + "\n"
 	}
 
 	outFile, err := os.Create(*fn)
@@ -64,8 +66,34 @@ func (t *MontageClipList) assStyle() string {
 	return b
 }
 
-func (t *MontageClipList) assFilter() []ASSLine {
-	var lines []ASSLine
+func (t *MontageClipList) smplTp(tmpl string) ([]string, error) {
+	var lines []string
+	tp, err := template.New("T").Parse(tmpl)
+	if err != nil {
+		return nil, err
+	}
+	for _, c := range t.Clips {
+		c.Name = strings.TrimSpace(c.Name)
+		var b bytes.Buffer
+		if err := tp.Execute(&b, c); err != nil {
+			return nil, err
+		}
+		lines = append(lines, b.String())
+	}
+	return lines, nil
+}
+
+func (t *MontageClipList) assFilter() error {
+
+	captions, err := t.smplTp(t.cfg.ASSFile.Template)
+	if err != nil {
+		return err
+	}
+	indexes, err := t.smplTp(t.cfg.YouTubeIndexFile.Template)
+	if err != nil {
+		return err
+	}
+	t.data = nil
 	for i, c := range t.Clips {
 		startDur := parseTimeToDuration(c.StartInMontage)
 		var endDur time.Duration
@@ -82,11 +110,13 @@ func (t *MontageClipList) assFilter() []ASSLine {
 			// 最後のクリップは自分の長さ
 			endDur = startDur + parseTimeToDuration(c.Length) - hideBefore
 		}
-		lines = append(lines, ASSLine{
-			Name:  t.cfg.ASSFile.Filter.Pre + strings.TrimSpace(c.Name) + t.cfg.ASSFile.Filter.Post,
-			Start: formatDurationToASS(startDur),
-			End:   formatDurationToASS(endDur),
+
+		t.data = append(t.data, TData{
+			Caption:      captions[i],
+			YouTubeIndex: indexes[i],
+			EventStart:   formatDurationToASS(startDur),
+			EventEnd:     formatDurationToASS(endDur),
 		})
 	}
-	return lines
+	return nil
 }

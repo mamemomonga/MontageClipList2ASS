@@ -8,13 +8,18 @@ import (
 )
 
 type Config struct {
-	ASSFile TASSFile `yaml:"ASSFile"`
+	ASSFile          TASSFile          `yaml:"ASSFile"`
+	YouTubeIndexFile TYouTubeIndexFile `type:"YouTubeIndexFile"`
+}
+
+type TYouTubeIndexFile struct {
+	Template string `yaml:"Template"`
 }
 
 type TASSFile struct {
-	Style      TStyle  `yaml:"Style"`
-	Filter     TFilter `yaml:"Filter"`
-	HideBefore int     `yaml:"HideBefore"`
+	Style      TStyle `yaml:"Style"`
+	Template   string `yaml:"Template"`
+	HideBefore int    `yaml:"HideBefore"`
 }
 
 type TStyle struct {
@@ -41,11 +46,6 @@ type TStyle struct {
 	MarginR         int    `yaml:"MarginR"`
 	MarginV         int    `yaml:"MarginV"`
 	Encoding        int    `yaml:"Encoding"`
-}
-
-type TFilter struct {
-	Pre  string `yaml:"pre"`
-	Post string `yaml:"post"`
 }
 
 func NewConfig() *Config {
