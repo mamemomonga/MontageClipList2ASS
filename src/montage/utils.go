@@ -58,3 +58,9 @@ func formatDurationToASS(d time.Duration) string {
 	cs := (d.Milliseconds() % 1000) / 10 // centiseconds
 	return fmt.Sprintf("%d:%02d:%02d.%02d", h, m, s, cs)
 }
+
+func formatDurationToYouTube(d time.Duration) string {
+	m := int(d.Minutes())
+	s := int(d.Seconds()) % 60
+	return fmt.Sprintf("%02d:%02d", m, s)
+}

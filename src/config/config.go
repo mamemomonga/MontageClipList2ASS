@@ -9,7 +9,7 @@ import (
 
 type Config struct {
 	ASSFile          TASSFile          `yaml:"ASSFile"`
-	YouTubeIndexFile TYouTubeIndexFile `type:"YouTubeIndexFile"`
+	YouTubeIndexFile TYouTubeIndexFile `yaml:"YouTubeIndexFile"`
 }
 
 type TYouTubeIndexFile struct {
@@ -17,8 +17,8 @@ type TYouTubeIndexFile struct {
 }
 
 type TASSFile struct {
-	Style      TStyle `yaml:"Style"`
 	Template   string `yaml:"Template"`
+	Style      TStyle `yaml:"Style"`
 	HideBefore int    `yaml:"HideBefore"`
 }
 

@@ -27,4 +27,4 @@ ASSFile:
     Encoding: 1
 
 YouTubeIndexFile:
-  Template: '{{.YouTubeStart}} - {{.Name}}"'
+  Template: "{{.StartTime}} - {{.Name}}"

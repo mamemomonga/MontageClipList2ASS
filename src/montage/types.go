@@ -2,14 +2,11 @@ package montage
 
 import (
 	"encoding/xml"
-
-	"github.com/mamemomonga/MontageClipList2ASS/src/config"
 )
 
-type MontageClipList struct {
-	Clips []Clip
-	cfg   *config.Config
-	data  []TData
+type TLineTemplateData struct {
+	Name      string
+	StartTime string
 }
 
 type TData struct {

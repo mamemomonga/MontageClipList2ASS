@@ -1,5 +1,5 @@
 # 実行ファイル
-NAME := montage_cliplist2ass
+NAME := mcl2ass
 
 # 出力ディレクトリ
 BINDIR := bin
