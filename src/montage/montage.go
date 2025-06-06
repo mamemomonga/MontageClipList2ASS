@@ -166,6 +166,7 @@ func (t *MontageClipList) assStyle() string {
 
 func (t *MontageClipList) YouTubeIndexWrite(fn *string) error {
 	var s string
+	s = "TrackList:\n"
 	for _, c := range t.d {
 		s = s + fmt.Sprintf("%s\n", c.YouTubeIndex)
 	}

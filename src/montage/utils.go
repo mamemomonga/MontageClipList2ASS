@@ -9,11 +9,17 @@ import (
 
 // parseTime converts "2 mn 13 s 639 ms" → "0:02:13.64"
 func parseTime(t string) string {
+	hour := 0
 	min := 0
 	sec := 0
 	ms := 0
 
-	re := regexp.MustCompile(`(\d+)\s*mn`)
+	re := regexp.MustCompile(`(\d+)\s*h`)
+	if match := re.FindStringSubmatch(t); len(match) > 1 {
+		hour, _ = strconv.Atoi(match[1])
+	}
+
+	re = regexp.MustCompile(`(\d+)\s*mn`)
 	if match := re.FindStringSubmatch(t); len(match) > 1 {
 		min, _ = strconv.Atoi(match[1])
 	}
@@ -26,16 +32,22 @@ func parseTime(t string) string {
 		ms, _ = strconv.Atoi(match[1])
 	}
 
-	total := fmt.Sprintf("0:%02d:%02d.%02d", min, sec, ms/10)
+	total := fmt.Sprintf("%d:%02d:%02d.%02d", hour, min, sec, ms/10)
 	return total
 }
 
 // "2 mn 13 s 639 ms" → time.Duration
 func parseTimeToDuration(s string) time.Duration {
+	hour := 0
 	min := 0
 	sec := 0
 	ms := 0
-	re := regexp.MustCompile(`(\d+)\s*mn`)
+
+	re := regexp.MustCompile(`(\d+)\s*h`)
+	if m := re.FindStringSubmatch(s); len(m) > 1 {
+		hour, _ = strconv.Atoi(m[1])
+	}
+	re = regexp.MustCompile(`(\d+)\s*mn`)
 	if m := re.FindStringSubmatch(s); len(m) > 1 {
 		min, _ = strconv.Atoi(m[1])
 	}
@@ -47,7 +59,10 @@ func parseTimeToDuration(s string) time.Duration {
 	if m := re.FindStringSubmatch(s); len(m) > 1 {
 		ms, _ = strconv.Atoi(m[1])
 	}
-	return time.Duration(min)*time.Minute + time.Duration(sec)*time.Second + time.Duration(ms)*time.Millisecond
+	return time.Duration(hour)*time.Hour +
+		time.Duration(min)*time.Minute +
+		time.Duration(sec)*time.Second +
+		time.Duration(ms)*time.Millisecond
 }
 
 // time.Duration → "0:02:13.63"（ASS形式）
@@ -60,7 +75,12 @@ func formatDurationToASS(d time.Duration) string {
 }
 
 func formatDurationToYouTube(d time.Duration) string {
-	m := int(d.Minutes())
+	h := int(d.Hours())
+	m := int(d.Minutes()) % 60
 	s := int(d.Seconds()) % 60
-	return fmt.Sprintf("%02d:%02d", m, s)
+	if h == 0 {
+		return fmt.Sprintf("  %02d:%02d", m, s)
+	} else {
+		return fmt.Sprintf("%d:%02d:%02d", h, m, s)
+	}
 }
