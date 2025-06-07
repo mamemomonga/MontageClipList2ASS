@@ -59,3 +59,12 @@ Dockerでビルド
 即時実行とプレビュー
 
     $ ./run.sh -h
+
+# 資料
+
+* [Sub Station Alpha v4.00+ Script Format](http://www.tcax.org/docs/ass-specs.htm)
+* [ASS File Format Guide](https://github.com/libass/libass/wiki/ASS-File-Format-Guide)
+
+# LICENSE
+
+MIT
