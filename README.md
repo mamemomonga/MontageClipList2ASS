@@ -2,9 +2,11 @@
 
 [WaveLab Pro](https://www.steinberg.net/ja/wavelab/)のモンタージュのXMLクリップリストファイルをASS(Advanced SubStation Alpha)に変換するツールです。
 
+output.txtの内容は、YouTubeの「説明」に貼ることで、時間リンクの見出しを作成することができます。
+
 ## 使い方
 
-    $ mcl2ass -f [XMLファイル] -c [設定ファイル] -o [出力ASSファイル] -x [出力YouTube 詳細]
+    $ mcl2ass -f [XMLファイル] -c [設定ファイル] -o [出力ASSファイル] -x [YouTube 説明テキスト出力]
     
 ヘルプ
 
@@ -16,7 +18,16 @@
 
 使用例
 
-    $ mcl2ass -f example/ClipList.xml -c example/config.yaml -o output.ass
+    $ mcl2ass -f example/ClipList.xml -c example/config.yaml -o output.ass -x output.txt
+
+使用例(ブルーバックでオーディオ入りの動画作成)
+
+    $ ffmpeg -f lavfi -i color=c=blue:s=1920x1080:r=24 \
+            -i audio.wav \
+            -vf "ass=output.ass" \
+            -c:v libx264 -pix_fmt yuv420p -c:a aac -shortest \
+            output.mp4
+
 
 ## バイナリ
 
